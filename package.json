@@ -1,0 +1,11 @@
+{
+  "name": "mealpalscript",
+  "version": "1.0.0",
+  "description": "A script to automatically login and order food from MealPal",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Faizan Ali",
+  "license": "ISC"
+}
