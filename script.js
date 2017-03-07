@@ -64,21 +64,38 @@ casper.then(function login() {
 
 casper.wait(6000);
 
-
 casper.then(function postLogin() {
     this.log('4. Opened: ' + this.getTitle(), 'info');
 
-    // Finds and selects pickup time for first meal on the page
-    this.evaluate(function choosePickupTime(casper) {
-        casper.log('5. Choosing:' + document.getElementsByClassName('meal')[ 0 ].children[ 0 ].textContent, 'info');
-        document.getElementsByClassName('meal')[ 0 ].children[ 2 ].children[ 4 ].children[ 1 ].children[ 6 ].click();
-    }, this);
+
+    // Finds and selects pickup time for the first meal containing keyword 'Chicken' on the page
+    this.evaluate(function choosePickupTime () {
+        // TODO: Switch to class names versus traversing down descendants; class names likely to remain more constant than DOM
+        for (var i = 0; i < document.getElementsByClassName('meal').length; i++) {
+            if (document.getElementsByClassName('meal')[ i ].children[ 0 ].textContent.indexOf('Chicken') != -1) {
+                console.log('5. Choosing meal: ' + document.getElementsByClassName('meal')[ i ].children[ 0 ].textContent, 'info');
+                // Chooses one of the last few pickup times
+                console.log('6. Choosing time: ' +  document.getElementsByClassName('meal')[ i ].children[ 2 ].children[ 4 ].children[ 1 ].children[ 5 ].textContent, 'info');
+                document.getElementsByClassName('meal')[ i ].children[ 2 ].children[ 4 ].children[ 1 ].children[ 5 ].click();
+                break;
+            }
+        }
+    });
 
     this.wait(2000);
 
-    // Finds and orders first meal on the page
+    // Finds and orders the first meal containing keyword 'Chicken' on the page
     this.evaluate(function chooseMeal () {
-        document.getElementsByClassName('meal')[ 0 ].children[ 2 ].children[ 5 ].children[ 0 ].click();
+        // TODO: Switch to class names versus traversing down descendants; class names likely to remain more constant than DOM
+        for (var i = 0; i < document.getElementsByClassName('meal').length; i++) {
+            if (document.getElementsByClassName('meal')[ i ].children[ 0 ].textContent.indexOf('Chicken') != -1) {
+                // Clicks on Reserve button
+                document.getElementsByClassName('meal')[ i ].children[ 2 ].children[ 5 ].children[ 0 ].click();
+
+                console.log('7. Meal ordered', 'info');
+                break;
+            }
+        }
     });
 
 });
