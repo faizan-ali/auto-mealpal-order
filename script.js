@@ -67,6 +67,13 @@ casper.wait(6000);
 casper.then(function postLogin() {
     this.log('4. Opened: ' + this.getTitle(), 'info');
 
+    this.evaluate(function chooseLocation() {
+        // Sets location
+        document.getElementsByClassName('filter-text')[0].children[0].value = '1900 M Street NW';
+        // Simulates Enter keypress
+        document.getElementsByClassName('filter-text')[0].children[0].dispatchEvent(new KeyboardEvent('keydown', {'keyCode':13, 'which':13}));
+        document.getElementsByClassName('search-button')[0].click();
+    });
 
     // Finds and selects pickup time for the first meal containing keyword 'Chicken' on the page
     this.evaluate(function choosePickupTime () {
